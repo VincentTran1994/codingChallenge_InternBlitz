@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link href="home.css" type="text/css" rel="stylesheet">
+    <title>Home Page</title>
+  </head>
+  <body>
+    <div class="container" style="text-align:center; margin-top:8%;">
+      <h4 style="font-size:30px; margin-bottom: 5%;">Career searching</h4>
+      <div class ='row'>
+        <div class="card col" style="margin-right:5px;">
+          <img class="card-img-top" style="width: auto; height: 300px;" src="..\static\airbnb.image.jpg" alt="Card image cap">
+          <div class="card-body">
+            <h3 class="card-title">Airbnb</h3>
+            <p class="card-text">
+              Airbnb is an American company which operates an online marketplace and hospitality service for people to lease
+              or rent short-term lodging including holiday cottages, apartments, homestays, hostel beds, or hotel rooms, to
+              participate in or facilitate experiences related to tourism such as walking tours, and to make reservations at
+              restaurants.
+            </p>
+            <a href="/airbnb" class="btn btn-primary">Explore</a>
+          </div>
+        </div>
+
+        <div class="card col" style="width: 18rem;margin-left:5px;">
+          <img class="card-img-top" style="width: auto; height: 300px;" src="..\static\twilio.png" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Twilio</h5>
+            <p class="card-text">Twilio is a cloud communications platform as a service company based in San Francisco,
+               California. Twilio allows software developers to programmatically make and receive phone calls and send
+               and receive text messages using its web service APIs.
+             </p>
+            <a href="/twilio" class="btn btn-primary">Explore</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="container">
+      {% for link in category %}
+          <a href="{{link}}">{{link}}</a>
+      {% endfor %}
+    </div>
+
+  </body>
+</html>
