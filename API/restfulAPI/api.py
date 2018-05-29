@@ -66,25 +66,27 @@ for category in soupTwilio.find_all('div',class_='collapse'):
         id = re.findall('\\d+',link)    #id
         OpenPositions.append(OpenPosition(id,position,location,link,company))
 
+#add in all positions into the lists
+for OpenPosition in OpenPositions:
+    job = {
+        # 'OpenPositions': OpenPositions,
+        'id' : OpenPosition.id,
+        'position' : OpenPosition.position ,
+        'location' : OpenPosition.location ,
+        'link' : OpenPosition.link,
+        'company': OpenPosition.company
+    }
+    jobs.append(job)
+
+
 #define to retrieve the whole lists
 class jobList(Resource):
     def get(self):
         return {'jobs' : jobs}
 
-    #add in all positions into the lists
+    #testing api
     def post(self):
         #data = request.get_json()
-        for OpenPosition in OpenPositions:
-            job = {
-                # 'OpenPositions': OpenPositions,
-                'id' : OpenPosition.id,
-                'position' : OpenPosition.position ,
-                'location' : OpenPosition.location ,
-                'link' : OpenPosition.link,
-                'company': OpenPosition.company
-            }
-            jobs.append(job)
-
         return jobs,201
 
 #getting a single job position with ID
