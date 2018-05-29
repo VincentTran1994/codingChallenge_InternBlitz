@@ -22,7 +22,7 @@ jobs = []
 #the twilio job page url
 twilioUrl = 'https://www.twilio.com/company/jobs'
 #get the hidden data from twilio
-driver = webdriver.PhantomJS(executable_path='D:\\phantomjs-2.1.1-windows\\bin\\phantomjs')
+driver = webdriver.PhantomJS(executable_path='D:\\web\\reactJS\\codingChanllenge\\API\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe')
 driver.get(twilioUrl)
 sourceTwilio = driver.page_source
 soupTwilio = BeautifulSoup(sourceTwilio,'html.parser')
