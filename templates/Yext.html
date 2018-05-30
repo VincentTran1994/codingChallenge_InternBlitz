@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Airbnb Positions</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <link href="home.css" type="text/css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container" style="margin-top: 5%;">
+      <h3 style="text-align:center; margin:3%;">Opening positions at Twilio</h3>
+      <div class="row">
+      {% for yextJob in yextJobs %}
+
+          <div class="col-lg-3 col-md-4 col-sm-6" style="padding: 1.2%;">
+            <div class="card" style="margin-right:2px;height:400px;">
+              <img class="card-img-top" style="width: auto; height: 150px;" src="..\static\Yext.jpeg" alt="Card image cap">
+              <div class="card-body">
+                <h5 class="card-title">{{yextJob['position']}}</h5>
+                <p class="card-text">Location: {{yextJob['location']}}</p>
+                <a href="{{yextJob['link']}}" target="_blank" class="btn btn-primary">Link</a>
+              </div>
+            </div>
+          </div>
+
+      {% endfor %}
+      </div>
+    </div>
+  </body>
+</html>

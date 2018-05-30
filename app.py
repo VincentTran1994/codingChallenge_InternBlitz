@@ -1,20 +1,23 @@
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,url_for
 import requests,json
-
 
 app = Flask(__name__)
 
 #getting the whold data from the final API http://127.0.0.1:4000
+#this API no need authentication and key
 dataSource = json.loads((requests.get('http://127.0.0.1:4000')).text)['jobs']
 
 #store data in order
 airbnbJobs = []
 twilioJobs = []
+yextJobs = []
 for data in dataSource:
     if data['company'] == 'Airbnb':
         airbnbJobs.append(data)
     if  data['company'] == 'Twilio':
         twilioJobs.append(data)
+    if  data['company'] == 'Yext':
+        yextJobs.append(data)
 
 
 #home route
@@ -33,6 +36,12 @@ def aribnb():
 def twilio():
     #render the render_template and data
     return render_template('twilio.html',twilioJobs = twilioJobs)
+
+#Yext page
+@app.route('/yext')
+def yext():
+    #render the render_template and data
+    return render_template('Yext.html',yextJobs = yextJobs)
 
 
 app.run(port=5000,debug=True)

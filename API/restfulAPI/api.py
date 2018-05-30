@@ -1,9 +1,8 @@
 from flask import Flask,request
 from flask_restful import Resource, Api
-import requests,re
+import requests,re,json
 #scrapping data from the web
 from bs4 import BeautifulSoup
-from selenium import webdriver
 
 app = Flask(__name__)
 api = Api(app)
@@ -17,15 +16,7 @@ class OpenPosition():
         self.company = company
 
 #list of jobs for both companies
-jobs = []
-
-#the twilio job page url
-twilioUrl = 'https://www.twilio.com/company/jobs'
-#get the hidden data from twilio
-driver = webdriver.PhantomJS(executable_path='D:\\web\\reactJS\\codingChanllenge\\API\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe')
-driver.get(twilioUrl)
-sourceTwilio = driver.page_source
-soupTwilio = BeautifulSoup(sourceTwilio,'html.parser')
+OpenPositions= []
 
 #from airbnb job pages
 airbnbUrl='https://www.airbnb.com/careers/departments'
@@ -34,8 +25,6 @@ soupAirbnb = BeautifulSoup(sourceAirbnb,'html.parser')
 
 #list of airbnb category
 categories = []
-OpenPositions= []
-
 #store lists of link in the categories
 for categoryLink in soupAirbnb.find_all('a',class_='jobs-card link-reset'):
     #getting all links
@@ -55,17 +44,35 @@ for categoryLink in categories:
                 company = 'Airbnb'  #company
                 OpenPositions.append(OpenPosition(id,position,location,link,company))
 
-#scraping and store from Twillio
-for category in soupTwilio.find_all('div',class_='collapse'):
-    # categoryprint(category['id'])
-    for engineering in category.find_all('li'):
-        position = engineering.a.text #position
-        company = 'Twilio' #company name
-        location = engineering.a.span.text#locaion
-        link = engineering.a['href']#link
-        id = re.findall('\\d+',link)    #id
-        OpenPositions.append(OpenPosition(id,position,location,link,company))
+# from the yext Api
+yextUrl = 'https://api.greenhouse.io/v1/boards/yext/embed/departments'
+sourceYext = json.loads((requests.get(yextUrl)).text)['departments']
+#from the yext Api
+for jobs in sourceYext:
+    if jobs['jobs']:
+        for job in jobs['jobs']:
+            id = job['id']#id
+            position = job['title'] #postion
+            location = job['location']['name']#location
+            link = job['absolute_url'] #link
+            company = 'Yext'
+            OpenPositions.append(OpenPosition(id,position,location,link,company))
 
+#from the twilio API
+twilioUrl = 'https://api.greenhouse.io/v1/boards/twilio/embed/jobs?&content=true&_=1527657664356'
+sourceTwilio = json.loads((requests.get(twilioUrl)).text)['jobs']
+
+#scraping and store from Twillio
+for jobTwilio in sourceTwilio:
+    link = sourceTwilio[0]['absolute_url']
+    location = sourceTwilio[0]['location']['name'] #location
+    id = sourceTwilio[0]['id'] #id
+    position = sourceTwilio[0]['title'] #position
+    company = 'Twilio'
+    OpenPositions.append(OpenPosition(id,position,location,link,company))
+
+#api render purpose
+jobs = []
 #add in all positions into the lists
 for OpenPosition in OpenPositions:
     job = {
@@ -79,11 +86,11 @@ for OpenPosition in OpenPositions:
     jobs.append(job)
 
 
+
 #define to retrieve the whole lists
 class jobList(Resource):
     def get(self):
         return {'jobs' : jobs}
-
     #testing api
     def post(self):
         #data = request.get_json()
@@ -99,8 +106,6 @@ class Job(Resource):
         #similar to the for loop ablove
         job = next(filter(lambda x: x['id'][0] == id, jobs), None)
         return {'job': job},200 if job else 404
-
-
 
 
 #api.add_resource(Job, '/airbnb/job/<string:name>')

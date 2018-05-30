@@ -3,29 +3,30 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-    <link href="home.css" type="text/css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='CSS/home.css') }}" type="text/css" rel="stylesheet">
     <title>Home Page</title>
   </head>
   <body>
     <div class="container" style="text-align:center; margin-top:8%;">
       <h4 style="font-size:30px; margin-bottom: 5%;">Career searching</h4>
       <div class ='row'>
-        <div class="card col" style="margin-right:5px;">
-          <img class="card-img-top" style="width: auto; height: 300px;" src="..\static\airbnb.image.jpg" alt="Card image cap">
+        <!-- Airbnb card -->
+        <div class="card col-sm-12 col-md-6 col-lg-4" style="border-radius: 5px;">
+          <img class="card-img-top" style="width:auto; height:250px;" src="..\static\airbnb.jpg" alt="Card image cap">
           <div class="card-body">
             <h3 class="card-title">Airbnb</h3>
             <p class="card-text">
               Airbnb is an American company which operates an online marketplace and hospitality service for people to lease
               or rent short-term lodging including holiday cottages, apartments, homestays, hostel beds, or hotel rooms, to
-              participate in or facilitate experiences related to tourism such as walking tours, and to make reservations at
-              restaurants.
+              participate in or facilitate experiences related to tourism.
             </p>
             <a href="/airbnb" class="btn btn-primary">Explore</a>
           </div>
         </div>
 
-        <div class="card col" style="width: 18rem;margin-left:5px;">
-          <img class="card-img-top" style="width: auto; height: 300px;" src="..\static\twilio.png" alt="Card image cap">
+        <!-- Twilio Card -->
+        <div class="card col-sm-12 col-md-6 col-lg-4" style="border-radius: 5px;">
+          <img class="card-img-top" style="width:auto; height:250px;" src="..\static\twilio.png" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title">Twilio</h5>
             <p class="card-text">Twilio is a cloud communications platform as a service company based in San Francisco,
@@ -35,8 +36,21 @@
             <a href="/twilio" class="btn btn-primary">Explore</a>
           </div>
         </div>
-      </div>
 
+        <!-- Yext Card -->
+        <div class="card col-sm-12 col-md-6 col-lg-4" style="border-radius: 5px;">
+          <img class="card-img-top" style="width:auto; height:250px;" src="..\static\Yext.jpeg" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">Yext</h5>
+            <p class="card-text">Yext is a New York City technology company that helps businesses manage the public facts
+                about their brands that they want consumers to see online.Businesses use Yext to update the public facing
+                facts about their brands across Yext's network.
+              </p>
+            <a href="/yext" class="btn btn-primary">Explore</a>
+          </div>
+        </div>
+
+      </div>
     </div>
 
 
