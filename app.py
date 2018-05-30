@@ -1,10 +1,10 @@
-from flask import Flask,render_template,request,url_for
+from flask import Flask,render_template,url_for
 import requests,json
 
 app = Flask(__name__)
 
 #getting the whold data from the final API http://127.0.0.1:4000
-#this API no need authentication and key
+#this API no need authentication or key
 dataSource = json.loads((requests.get('http://127.0.0.1:4000')).text)['jobs']
 
 #store data in order
