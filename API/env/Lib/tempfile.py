@@ -22,6 +22,7 @@ This module also provides some data items to the user:
              any routine from this module, it will be considered as
              another candidate location to store temporary files.
 """
+import secrets
 
 __all__ = [
     "NamedTemporaryFile", "TemporaryFile", # high level safe interfaces
@@ -42,7 +43,6 @@ import io as _io
 import os as _os
 import shutil as _shutil
 import errno as _errno
-from random import Random as _Random
 import weakref as _weakref
 import _thread
 _allocate_lock = _thread.allocate_lock
@@ -143,7 +143,7 @@ class _RandomNameSequence:
     def rng(self):
         cur_pid = _os.getpid()
         if cur_pid != getattr(self, '_rng_pid', None):
-            self._rng = _Random()
+            self._rng = secrets.SystemRandom()._Random()
             self._rng_pid = cur_pid
         return self._rng
 
