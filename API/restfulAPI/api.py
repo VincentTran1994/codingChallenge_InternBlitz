@@ -3,6 +3,7 @@ from flask_restful import Resource, Api
 import requests,re,json
 #scrapping data from the web
 from bs4 import BeautifulSoup
+from security import safe_requests
 
 app = Flask(__name__)
 api = Api(app)
@@ -19,7 +20,7 @@ soupAirbnb = BeautifulSoup(sourceAirbnb,'html.parser')
 for categoryLink in soupAirbnb.find_all('a',class_='jobs-card link-reset'):
     #getting all catergory urls
     catergoryUrl = 'https://www.airbnb.com' + categoryLink['href']
-    tempSource = requests.get(catergoryUrl).text
+    tempSource = safe_requests.get(catergoryUrl).text
     soupPositions = BeautifulSoup(tempSource,'html.parser')
     if soupPositions.tbody:
         for soupPosition in soupPositions.find_all('tr'):
