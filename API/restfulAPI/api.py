@@ -12,14 +12,14 @@ OpenPositions= []
 
 #from airbnb job pages
 airbnbUrl='https://www.airbnb.com/careers/departments'
-sourceAirbnb = requests.get(airbnbUrl).text
+sourceAirbnb = requests.get(airbnbUrl, timeout=60).text
 soupAirbnb = BeautifulSoup(sourceAirbnb,'html.parser')
 
 #store lists of link in the categories
 for categoryLink in soupAirbnb.find_all('a',class_='jobs-card link-reset'):
     #getting all catergory urls
     catergoryUrl = 'https://www.airbnb.com' + categoryLink['href']
-    tempSource = requests.get(catergoryUrl).text
+    tempSource = requests.get(catergoryUrl, timeout=60).text
     soupPositions = BeautifulSoup(tempSource,'html.parser')
     if soupPositions.tbody:
         for soupPosition in soupPositions.find_all('tr'):
