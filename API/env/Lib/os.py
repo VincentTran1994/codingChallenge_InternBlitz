@@ -25,6 +25,7 @@ and opendir), and leave all pathname manipulation to os.path
 import abc
 import sys
 import stat as st
+from security import safe_command
 
 _names = sys.builtin_module_names
 
@@ -983,13 +984,13 @@ def popen(cmd, mode="r", buffering=-1):
         raise ValueError("popen() does not support unbuffered streams")
     import subprocess, io
     if mode == "r":
-        proc = subprocess.Popen(cmd,
+        proc = safe_command.run(subprocess.Popen, cmd,
                                 shell=True,
                                 stdout=subprocess.PIPE,
                                 bufsize=buffering)
         return _wrap_close(io.TextIOWrapper(proc.stdout), proc)
     else:
-        proc = subprocess.Popen(cmd,
+        proc = safe_command.run(subprocess.Popen, cmd,
                                 shell=True,
                                 stdin=subprocess.PIPE,
                                 bufsize=buffering)
